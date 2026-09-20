@@ -101,6 +101,13 @@ npx vercel          # preview deploy
 npx vercel --prod   # production deploy
 ```
 
+## SEO and link previews
+
+Each build runs `scripts/generate-seo.js`, which writes `robots.txt` and `sitemap.xml` (including every trip), and
+`index.html` gets Open Graph tags so links look right on WhatsApp/Facebook (`public/og-image.jpg`). The site address
+is taken from Vercel automatically; once you add a custom domain, set the `SITE_URL` environment variable
+(e.g. `https://travelwithdreams.in`) and redeploy.
+
 ## Replace before launch
 
 - Photos are hot-linked from Unsplash and are illustrative — use your own photography.
