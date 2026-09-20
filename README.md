@@ -74,8 +74,19 @@ npm run submissions -- bookings   # or: enquiries
 
 You can also browse the table in the Neon console via the Vercel dashboard → Storage.
 
-Nothing notifies your team automatically yet — check the list above, or add email/WhatsApp alerts in
-`server/routes/forms.js`.
+### Email alerts
+
+`server/lib/notify.js` emails your team on every new booking request and enquiry (via [Resend](https://resend.com)).
+The customer's address is set as `Reply-To`, so replying goes straight to them. A failed email never fails the booking.
+It is switched on by these Vercel environment variables (alerts are skipped if the first two are missing):
+
+| Variable | Purpose |
+| --- | --- |
+| `RESEND_API_KEY` | added automatically by the Resend integration |
+| `ALERT_EMAIL_TO` | who receives alerts — one address or a comma-separated list |
+| `ALERT_EMAIL_FROM` | optional sender, default `Travel With Dreams <onboarding@resend.dev>` |
+
+Until you verify your own domain in Resend, it only delivers to the email address of your Resend account.
 
 ## Deploying to Vercel
 

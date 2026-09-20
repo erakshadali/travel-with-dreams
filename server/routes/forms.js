@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
+import { notifyBooking, notifyEnquiry } from '../lib/notify.js';
 import { append } from '../lib/store.js';
 import { MAX_TRAVELLERS, buildDepartures, findTrip, quote } from '../lib/tripService.js';
 import { clean, isEmail, isPhone, newReference, requireValid } from '../lib/validate.js';
@@ -45,6 +46,7 @@ router.post('/enquiries', limiter, async (req, res) => {
     ...enquiry,
     createdAt: new Date().toISOString(),
   });
+  await notifyEnquiry({ ...saved, tripTitle: findTrip(saved.tripSlug)?.title });
   res.status(201).json({ reference: saved.reference });
 });
 
@@ -84,6 +86,7 @@ router.post('/bookings', limiter, async (req, res) => {
     status: 'pending-confirmation',
     createdAt: new Date().toISOString(),
   });
+  await notifyBooking(saved);
 
   res.status(201).json({
     reference: saved.reference,
