@@ -1,0 +1,18 @@
+.page-header {
+  padding-block: clamp(40px, 6vw, 72px);
+  background:
+    radial-gradient(circle at 85% 20%, rgba(255, 122, 61, 0.28), transparent 45%),
+    linear-gradient(135deg, var(--primary-dark), var(--ink));
+  color: #dbe7f2;
+}
+
+.page-header h1 {
+  max-width: 20ch;
+  color: #fff;
+}
+
+.page-header p:not(.eyebrow) {
+  max-width: 60ch;
+  margin-top: 14px;
+  font-size: 1.1rem;
+}

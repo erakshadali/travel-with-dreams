@@ -1,0 +1,64 @@
+/* Trip listing — filters, chips and results */
+.filters {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 760px) {
+  .filters {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .filters__search {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1060px) {
+  .filters {
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  }
+
+  .filters__search {
+    grid-column: auto;
+  }
+}
+
+.filters__search {
+  position: relative;
+}
+
+.filters__search svg {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  width: 20px;
+  height: 20px;
+  color: var(--muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.filters__search input {
+  padding-left: 44px;
+}
+
+.chips {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding-bottom: 6px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.results-count {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: var(--ink);
+}

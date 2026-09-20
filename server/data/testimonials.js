@@ -1,0 +1,51 @@
+// Sample reviews for development — replace with real, permissioned customer reviews.
+export const testimonials = [
+  {
+    id: 1,
+    name: 'Riya Sharma',
+    from: 'Mumbai',
+    trip: 'Leh Ladakh Explorer',
+    rating: 5,
+    quote: 'Our trip captain handled everything — permits, stays, even a late-night oxygen scare. Pangong at sunrise was unreal. Easily the best group trip I have done.',
+  },
+  {
+    id: 2,
+    name: 'Arjun Mehta',
+    from: 'Bengaluru',
+    trip: 'Meghalaya Untamed',
+    rating: 5,
+    quote: 'Well-paced itinerary and a really fun group. The root bridge trek was tough but worth every step. Transparent pricing with no surprises at the end.',
+  },
+  {
+    id: 3,
+    name: 'Neha & Karan',
+    from: 'Delhi',
+    trip: 'Kerala Backwaters & Hills',
+    rating: 5,
+    quote: 'We booked this for our anniversary. The houseboat was gorgeous and the hotel upgrades they arranged were a lovely surprise. Highly recommend.',
+  },
+  {
+    id: 4,
+    name: 'Sameer Khan',
+    from: 'Pune',
+    trip: 'Spiti Valley Circuit',
+    rating: 4,
+    quote: 'Homestays in Spiti were the highlight — warm food and warmer hosts. Roads are rough, but the crew made it easy. Would happily travel with them again.',
+  },
+  {
+    id: 5,
+    name: 'Priya Nair',
+    from: 'Chennai',
+    trip: 'Bali Bliss',
+    rating: 5,
+    quote: 'First international trip with a group and I felt completely looked after. Nusa Penida day was the highlight. Great value for the hotels we stayed in.',
+  },
+  {
+    id: 6,
+    name: 'Vikram Rao',
+    from: 'Hyderabad',
+    trip: 'Royal Rajasthan & Taj',
+    rating: 5,
+    quote: 'Knowledgeable guides, comfortable heritage stays and a smooth ride across five cities. Seeing the Taj at sunrise was worth the early alarm.',
+  },
+];
