@@ -31,3 +31,7 @@ src/react-state-class2/
 
 # Vercel project link
 .vercel
+
+# Secrets pulled from Vercel (DATABASE_URL etc.)
+.env*.local
+.env
