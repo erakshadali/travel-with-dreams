@@ -159,7 +159,7 @@
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--cta);
+  color: var(--cta-text);
 }
 
 .gem-card__expert-label svg {

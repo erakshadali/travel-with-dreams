@@ -18,6 +18,7 @@
   --primary-tint: #e5f1fa;
   --cta: #cf4510; /* darker orange so white text passes contrast */
   --cta-hover: #b53b0b;
+  --cta-text: #b53b0b; /* orange for small text on light backgrounds (4.5:1+) */
   --accent: #ff7a3d;
   --accent-tint: #fff0e8;
   --gold: #f5a623;
@@ -177,7 +178,7 @@ h3 {
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--cta);
+  color: var(--cta-text);
 }
 
 .eyebrow--light {
@@ -299,7 +300,7 @@ h3 {
 
 .tag--accent {
   background: var(--accent-tint);
-  color: var(--cta);
+  color: var(--cta-text);
 }
 
 .chip {

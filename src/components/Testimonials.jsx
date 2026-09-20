@@ -10,7 +10,7 @@ export default function Testimonials({ items }) {
           {items.slice(0, 3).map((item) => (
             <li key={item.id} className="testimonial">
               <Quote className="testimonial__quote" aria-hidden="true" />
-              <p className="testimonial__stars" aria-label={`${item.rating} out of 5 stars`}>
+              <p className="testimonial__stars" role="img" aria-label={`${item.rating} out of 5 stars`}>
                 {Array.from({ length: item.rating }, (_, i) => (
                   <Star key={i} aria-hidden="true" fill="currentColor" />
                 ))}
