@@ -9,6 +9,7 @@ const HERO_IMAGE = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4
 
 export default function Hero({ destinations = [] }) {
   const navigate = useNavigate();
+  const popular = destinations.filter((d) => d.popular).slice(0, 5);
   const [destination, setDestination] = useState('');
   const [duration, setDuration] = useState('');
 
@@ -74,19 +75,19 @@ export default function Hero({ destinations = [] }) {
           </button>
         </form>
 
-        {destinations.length > 0 && (
-          <p className="hero__popular">
-            <span>Popular:</span>
-            {destinations
-              .filter((d) => d.popular)
-              .slice(0, 5)
-              .map((d) => (
+        {/* Always rendered (with reserved height) so the chips arriving from the API don't shift the page. */}
+        <p className="hero__popular">
+          {popular.length > 0 && (
+            <>
+              <span>Popular:</span>
+              {popular.map((d) => (
                 <Link key={d.slug} to={`/trips?destination=${d.slug}`}>
                   {d.name}
                 </Link>
               ))}
-          </p>
-        )}
+            </>
+          )}
+        </p>
       </div>
     </section>
   );

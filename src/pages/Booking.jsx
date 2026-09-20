@@ -22,7 +22,7 @@ export default function Booking() {
 
   if (loading) {
     return (
-      <div className="container section" aria-busy="true">
+      <div className="container section booking__loading" aria-busy="true">
         <div className="skeleton skeleton--title" style={{ width: '50%' }} />
         <div className="skeleton booking__skeleton" />
       </div>

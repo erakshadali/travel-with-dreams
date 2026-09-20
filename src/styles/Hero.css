@@ -3,9 +3,9 @@
   position: relative;
   isolation: isolate;
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* anchored to the top: content loading in below never moves what is above */
   min-height: min(100svh, 820px);
-  padding: calc(var(--header-h) + 40px) 0 clamp(96px, 12vw, 132px);
+  padding: calc(var(--header-h) + clamp(40px, 9vh, 104px)) 0 clamp(96px, 12vw, 132px);
   background: linear-gradient(135deg, var(--primary-dark), var(--ink));
   color: #fff;
 }
@@ -137,6 +137,7 @@
 }
 
 .hero__popular {
+  min-height: 34px; /* one row of chips */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -161,4 +162,10 @@
 .hero__popular a:hover {
   background: rgba(255, 255, 255, 0.2);
   color: #fff;
+}
+
+@media (max-width: 719px) {
+  .hero__popular {
+    min-height: 76px; /* chips wrap onto two rows on phones */
+  }
 }

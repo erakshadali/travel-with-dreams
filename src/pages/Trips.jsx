@@ -118,6 +118,7 @@ export default function Trips() {
             ))}
           </div>
 
+          <h2 className="sr-only">Trip results</h2>
           {trips.error ? (
             <ErrorState message={trips.error.message} onRetry={trips.reload} />
           ) : trips.loading ? (

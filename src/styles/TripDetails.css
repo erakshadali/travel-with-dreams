@@ -16,6 +16,8 @@
 .details--loading {
   display: grid;
   gap: 16px;
+  align-content: start;
+  min-height: 100svh; /* keeps the footer off-screen so the real content doesn't push it down */
   padding-block: 40px;
 }
 

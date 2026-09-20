@@ -36,6 +36,21 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <!-- Home only: fetch the hero photo early. Keep the URL in sync with HERO_IMAGE in src/components/Hero.jsx. -->
+    <script>
+      if (location.pathname === '/') {
+        var hero = document.createElement('link');
+        var base = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4';
+        hero.rel = 'preload';
+        hero.as = 'image';
+        hero.imageSrcset = [400, 800, 1200, 1600]
+          .map(function (w) { return base + '?auto=format&fit=crop&w=' + w + '&q=75 ' + w + 'w'; })
+          .join(', ');
+        hero.imageSizes = '100vw';
+        hero.fetchPriority = 'high';
+        document.head.appendChild(hero);
+      }
+    </script>
     <title>Travel With Dreams — Trips that become stories</title>
   </head>
   <body>
