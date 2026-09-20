@@ -57,10 +57,25 @@ Trips, destinations and unexplored spots live in `server/data/`. Business detail
 
 ## Where submissions go
 
-- **Locally:** enquiries and bookings are appended to `server/storage/*.json` (git-ignored).
-- **On Vercel:** functions have no persistent disk, so each submission is written to the **function logs** instead.
-  Before taking real bookings, connect a database (e.g. Neon/Postgres or Upstash Redis) or an email service by
-  replacing `append()` in `server/lib/store.js`.
+Enquiries and bookings are saved by `server/lib/store.js`, which picks a destination automatically:
+
+1. **Postgres (Neon)** whenever `DATABASE_URL` is set — this is what production on Vercel uses. The `submissions` table
+   is created on first use.
+2. **Function logs** on Vercel if no database is connected.
+3. **`server/storage/*.json`** on a developer machine (git-ignored).
+
+To read what has come in:
+
+```bash
+vercel env pull .env.local        # once — downloads DATABASE_URL (git-ignored)
+npm run submissions               # all, newest first
+npm run submissions -- bookings   # or: enquiries
+```
+
+You can also browse the table in the Neon console via the Vercel dashboard → Storage.
+
+Nothing notifies your team automatically yet — check the list above, or add email/WhatsApp alerts in
+`server/routes/forms.js`.
 
 ## Deploying to Vercel
 
