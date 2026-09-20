@@ -2,6 +2,8 @@
 
 A small-group travel agency website: browse trips, read full itineraries, discover offbeat "unexplored escapes", and send booking requests or enquiries.
 
+**Live site:** https://travel-with-dreams.vercel.app
+
 **Stack:** React 19 + Vite (frontend) · Express 5 (API) · React Router · Lucide icons
 
 ## Features
@@ -64,6 +66,9 @@ Trips, destinations and unexplored spots live in `server/data/`. Business detail
 
 The repo is set up for zero-config deploys: Vercel builds the Vite app to `dist/` and runs `api/index.js` as the API.
 `vercel.json` rewrites `/api/*` to the function and every other path to `index.html` (client-side routing).
+
+The Vercel project is connected to this GitHub repo, so every push to `main` deploys to production automatically.
+To deploy manually:
 
 ```bash
 npx vercel          # preview deploy
