@@ -47,12 +47,12 @@
 }
 
 .breadcrumbs a:hover {
-  color: var(--primary);
+  color: #fff;
 }
 
 .breadcrumbs [aria-current] {
   font-weight: 700;
-  color: var(--ink);
+  color: var(--strong);
 }
 
 .details__header {
@@ -95,7 +95,7 @@
 .details__meta > span:not(.rating) svg {
   width: 18px;
   height: 18px;
-  color: var(--primary);
+  color: var(--accent-light);
 }
 
 /* ---------- Gallery ---------- */
@@ -153,7 +153,7 @@
 }
 
 .gallery__all:hover {
-  background: var(--primary-tint);
+  background: var(--accent-light);
 }
 
 .gallery__all svg {
@@ -186,12 +186,12 @@
   max-height: 100dvh;
   padding: 0;
   border: 0;
-  background: rgba(6, 14, 24, 0.94);
+  background: color-mix(in srgb, var(--ink) 94%, transparent);
   color: #fff;
 }
 
 .lightbox::backdrop {
-  background: rgba(6, 14, 24, 0.94);
+  background: color-mix(in srgb, var(--ink) 94%, transparent);
 }
 
 .lightbox__content {
@@ -302,9 +302,10 @@
   margin-bottom: 8px;
   padding-block: 10px;
   overflow-x: auto;
+  border-radius: 0 0 var(--radius) var(--radius);
   border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(8px);
+  background: color-mix(in srgb, var(--ink) 72%, transparent);
+  backdrop-filter: blur(14px);
   scrollbar-width: none;
 }
 
@@ -317,8 +318,8 @@
 }
 
 .trip-tabs a:hover {
-  background: var(--primary-tint);
-  color: var(--primary);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
 }
 
 .details__section {
@@ -356,14 +357,15 @@
   gap: 2px;
   padding: 16px;
   border-radius: var(--radius);
-  background: var(--bg-soft);
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur);
 }
 
 .facts svg {
   width: 22px;
   height: 22px;
   margin-bottom: 6px;
-  color: var(--primary);
+  color: var(--accent-light);
 }
 
 .facts span {
@@ -375,7 +377,7 @@
 }
 
 .facts strong {
-  color: var(--ink);
+  color: var(--strong);
   line-height: 1.35;
 }
 
@@ -469,7 +471,7 @@
 .price-table td {
   text-align: right;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--strong);
   white-space: nowrap;
 }
 
@@ -489,7 +491,7 @@
 .price-table tfoot td {
   font-size: 1.1rem;
   font-weight: 800;
-  color: var(--ink);
+  color: var(--strong);
 }
 
 /* ---------- Itinerary accordion ---------- */
@@ -506,12 +508,13 @@
 .itinerary__item {
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .itinerary__item.is-open {
-  border-color: #b9d6ea;
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
   box-shadow: var(--shadow-sm);
 }
 
@@ -529,7 +532,7 @@
   border: 0;
   border-radius: var(--radius);
   background: none;
-  color: var(--ink);
+  color: var(--strong);
   text-align: left;
 }
 
@@ -538,7 +541,7 @@
   padding: 4px 12px;
   border-radius: 999px;
   background: var(--primary-tint);
-  color: var(--primary-dark);
+  color: var(--strong);
   font-size: 0.8rem;
   font-weight: 800;
 }
@@ -584,7 +587,8 @@
   padding: 24px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: #fff;
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur);
   box-shadow: var(--shadow);
   scroll-margin-top: calc(var(--header-h) + 16px);
 }
@@ -618,7 +622,7 @@
   font-size: 2rem;
   font-weight: 800;
   line-height: 1.1;
-  color: var(--ink);
+  color: var(--strong);
 }
 
 .booking-card__price s {
@@ -660,7 +664,7 @@
 
 .booking-card__summary dd {
   font-weight: 700;
-  color: var(--ink);
+  color: var(--strong);
 }
 
 .booking-card__summary .booking-card__total {
@@ -672,7 +676,7 @@
 
 .booking-card__total dt {
   font-weight: 800;
-  color: var(--ink);
+  color: var(--strong);
 }
 
 .booking-card .btn + .btn {
@@ -708,9 +712,9 @@
   gap: 16px;
   padding: 12px var(--gutter);
   border-top: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 -6px 20px rgba(11, 31, 51, 0.08);
+  background: color-mix(in srgb, var(--ink) 86%, transparent);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.3);
 }
 
 .mobile-bar small {
@@ -726,7 +730,7 @@
 .mobile-bar strong {
   font-size: 1.35rem;
   font-weight: 800;
-  color: var(--ink);
+  color: var(--strong);
 }
 
 @media (min-width: 960px) {

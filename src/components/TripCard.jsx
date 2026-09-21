@@ -9,7 +9,7 @@ export default function TripCard({ trip }) {
   const off = discountPercent(trip.price, trip.originalPrice);
 
   return (
-    <article className="trip-card">
+    <article className="trip-card" data-tilt>
       <Link to={`/trips/${trip.slug}`} className="trip-card__media" aria-hidden="true" tabIndex={-1}>
         <Img src={trip.image} alt="" width={800} sizes="(min-width: 1100px) 380px, (min-width: 700px) 45vw, 100vw" />
         {trip.badge && <span className="trip-card__badge">{trip.badge}</span>}

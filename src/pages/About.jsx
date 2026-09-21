@@ -3,6 +3,7 @@ import PageHeader from '../components/PageHeader';
 import SectionHeading from '../components/SectionHeading';
 import CtaBanner from '../components/CtaBanner';
 import Img from '../components/Img';
+import { SITE } from '../config/site';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import '../styles/About.css';
 
@@ -24,7 +25,7 @@ export default function About() {
 
   return (
     <>
-      <PageHeader eyebrow="About us" title="We help people travel further, together" description="Travel With Dreams runs small-group trips across India and abroad, built around good company, honest pricing and local experiences." />
+      <PageHeader eyebrow="About us" title="We help people travel further, together" description={`${SITE.name} runs small-group trips across India and abroad, built around good company, honest pricing and local experiences.`} />
 
       <section className="section">
         <div className="container about-story">
@@ -51,7 +52,7 @@ export default function About() {
           <SectionHeading center eyebrow="What we stand for" title="The principles behind every trip" />
           <ul className="values">
             {VALUES.map(({ icon: Icon, title, text }) => (
-              <li key={title} className="why-card">
+              <li key={title} className="why-card" data-tilt>
                 <span className="why-card__icon">
                   <Icon aria-hidden="true" />
                 </span>

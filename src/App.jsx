@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import { useTilt } from './hooks/useTilt';
 import Home from './pages/Home';
 import Trips from './pages/Trips';
 import TripDetails from './pages/TripDetails';
@@ -15,6 +16,7 @@ import './styles/Sections.css';
 
 function App() {
   const { pathname } = useLocation();
+  useTilt();
 
   return (
     <div className={`app${pathname === '/' ? ' is-home' : ''}`}>

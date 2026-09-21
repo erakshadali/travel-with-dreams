@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, Plane, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import Logo from './Logo';
 import { SITE } from '../config/site';
 import '../styles/Navbar.css';
 
@@ -42,10 +43,8 @@ export default function Navbar() {
     <header className={`navbar${overlay ? ' navbar--overlay' : ''}`}>
       <div className="navbar__inner container">
         <Link to="/" className="navbar__brand" onClick={closeMenu}>
-          <span className="navbar__logo">
-            <Plane aria-hidden="true" />
-          </span>
-          <span>{SITE.name}</span>
+          <Logo className="navbar__logo" />
+          <span className="navbar__name">{SITE.name}</span>
         </Link>
 
         <nav id="primary-nav" className={`navbar__nav${menuOpen ? ' is-open' : ''}`} aria-label="Primary">

@@ -1,5 +1,6 @@
 import { BadgeIndianRupee, Compass, ShieldCheck, Users } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import { SITE } from '../config/site';
 
 const REASONS = [
   {
@@ -30,13 +31,13 @@ export default function WhyUs() {
       <div className="container">
         <SectionHeading
           center
-          eyebrow="Why Travel With Dreams"
+          eyebrow={`Why ${SITE.name}`}
           title="Trips designed around you, not a checklist"
           description="We plan the details so you can focus on the mountain views, the food and the people you are travelling with."
         />
         <ul className="why-grid">
           {REASONS.map(({ icon: Icon, title, text }) => (
-            <li key={title} className="why-card">
+            <li key={title} className="why-card" data-tilt>
               <span className="why-card__icon">
                 <Icon aria-hidden="true" />
               </span>

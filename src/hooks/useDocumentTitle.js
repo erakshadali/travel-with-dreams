@@ -3,6 +3,6 @@ import { SITE } from '../config/site';
 
 export function useDocumentTitle(title) {
   useEffect(() => {
-    document.title = title ? `${title} · ${SITE.name}` : `${SITE.name} — Trips that become stories`;
+    document.title = title ? `${title} · ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
   }, [title]);
 }

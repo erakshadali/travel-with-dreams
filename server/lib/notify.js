@@ -3,12 +3,14 @@
 // Env vars (all set in Vercel; alerts are silently skipped if the first two are missing):
 //   RESEND_API_KEY     API key from the Resend integration
 //   ALERT_EMAIL_TO     who gets the alert — one address or a comma-separated list
-//   ALERT_EMAIL_FROM   optional sender, default "Travel With Dreams <onboarding@resend.dev>"
+//   ALERT_EMAIL_FROM   optional sender, default "<site name> <onboarding@resend.dev>"
 //   RESEND_API_URL     optional override (used by tests)
 //
 // Sending never throws: the submission is already saved by the time we get here, so a mail
 // problem must not turn a successful booking into an error for the customer.
-const DEFAULT_FROM = 'Travel With Dreams <onboarding@resend.dev>';
+import { SITE } from '../../src/config/site.js';
+
+const DEFAULT_FROM = `${SITE.name} <onboarding@resend.dev>`;
 const TIMEOUT_MS = 5000;
 
 const inr = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });

@@ -13,7 +13,7 @@ export default function GemCard({ gem, compact = false }) {
   const enquiry = `/contact?${new URLSearchParams({ trip: gem.tripSlugs[0] ?? '', spot: gem.name })}`;
 
   return (
-    <article className="gem-card" id={`gem-${gem.slug}`}>
+    <article className="gem-card" id={`gem-${gem.slug}`} data-tilt>
       <div className="gem-card__media">
         <Img src={gem.image} alt="" width={800} sizes="(min-width: 1100px) 380px, (min-width: 700px) 45vw, 100vw" />
         <span className="gem-card__theme">

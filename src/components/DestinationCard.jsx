@@ -6,7 +6,7 @@ export default function DestinationCard({ destination }) {
   const { slug, name, tagline, image, tripCount } = destination;
 
   return (
-    <Link to={`/trips?destination=${slug}`} className="destination-card">
+    <Link to={`/trips?destination=${slug}`} className="destination-card" data-tilt>
       <Img src={image} alt="" width={600} sizes="(min-width: 1000px) 280px, (min-width: 600px) 30vw, 46vw" />
       <span className="destination-card__count">
         {tripCount} {tripCount === 1 ? 'trip' : 'trips'}

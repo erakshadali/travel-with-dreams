@@ -45,7 +45,7 @@
 .not-found svg {
   width: 56px;
   height: 56px;
-  color: var(--primary);
+  color: var(--accent-light);
 }
 
 .not-found p {

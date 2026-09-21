@@ -1,12 +1,23 @@
 .footer {
-  background: var(--ink);
-  color: #b9c7d5;
+  position: relative;
+  background: color-mix(in srgb, var(--ink) 90%, transparent);
+  backdrop-filter: blur(14px);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* Brass hairline along the top edge */
+.footer::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
 }
 
 .footer__grid {
   display: grid;
-  gap: 36px;
-  padding-block: clamp(48px, 7vw, 72px);
+  gap: 40px;
+  padding-block: clamp(56px, 8vw, 88px);
 }
 
 @media (min-width: 640px) {
@@ -22,15 +33,18 @@
 }
 
 .footer h2 {
-  margin-bottom: 16px;
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
+  margin-bottom: 18px;
+  font-family: var(--font);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--accent-light);
 }
 
 .footer a {
-  color: #b9c7d5;
+  color: rgba(255, 255, 255, 0.72);
+  transition: color 0.2s;
 }
 
 .footer a:hover {
@@ -39,17 +53,24 @@
 
 .footer ul {
   display: grid;
-  gap: 10px;
+  gap: 11px;
 }
 
 .footer__brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-  font-size: 1.15rem;
-  font-weight: 800;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 500;
   color: #fff !important;
+}
+
+.footer__logo {
+  width: 44px;
+  height: 44px;
+  color: var(--accent-light);
 }
 
 .footer__about p {
@@ -59,7 +80,7 @@
 .footer__contact li {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
 }
 
 .footer__contact svg {
@@ -67,11 +88,12 @@
   width: 18px;
   height: 18px;
   margin-top: 4px;
-  color: var(--accent);
+  color: var(--accent-light);
 }
 
 .footer__bottom {
-  padding-block: 20px;
+  padding-block: 22px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
 }

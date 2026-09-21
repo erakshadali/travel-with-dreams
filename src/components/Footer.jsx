@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, Phone, Plane } from 'lucide-react';
+import { Mail, MapPin, Phone } from 'lucide-react';
+import Logo from './Logo';
 import { SITE } from '../config/site';
 import '../styles/Footer.css';
 
@@ -26,12 +27,10 @@ export default function Footer() {
       <div className="container footer__grid">
         <div className="footer__about">
           <Link to="/" className="footer__brand">
-            <span className="navbar__logo">
-              <Plane aria-hidden="true" />
-            </span>
+            <Logo className="footer__logo" />
             {SITE.name}
           </Link>
-          <p>Small-group trips across India and beyond, led by trip captains who love the places they take you.</p>
+          <p>{SITE.footerBlurb}</p>
         </div>
 
         <nav aria-label="Explore">

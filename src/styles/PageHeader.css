@@ -1,9 +1,27 @@
 .page-header {
-  padding-block: clamp(40px, 6vw, 72px);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding-block: clamp(48px, 7vw, 88px);
   background:
-    radial-gradient(circle at 85% 20%, rgba(255, 122, 61, 0.28), transparent 45%),
-    linear-gradient(135deg, var(--primary-dark), var(--ink));
-  color: #dbe7f2;
+    radial-gradient(circle 360px at 88% 24%, color-mix(in srgb, var(--accent) 24%, transparent), transparent),
+    linear-gradient(180deg, color-mix(in srgb, var(--ink) 40%, transparent), transparent);
+  color: var(--text);
+}
+
+/* A slowly turning ring for depth */
+.page-header::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -120px;
+  bottom: -220px;
+  width: 460px;
+  height: 460px;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  animation: ring-turn 44s linear infinite;
+  pointer-events: none;
 }
 
 .page-header h1 {
@@ -13,6 +31,6 @@
 
 .page-header p:not(.eyebrow) {
   max-width: 60ch;
-  margin-top: 14px;
+  margin-top: 16px;
   font-size: 1.1rem;
 }

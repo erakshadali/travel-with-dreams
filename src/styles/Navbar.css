@@ -1,13 +1,13 @@
-/* Navbar — fixed; transparent over the home hero, solid everywhere else */
+/* Navbar — fixed; transparent over the home hero, frosted glass everywhere else */
 .navbar {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 100;
   height: var(--header-h);
-  background: rgba(255, 255, 255, 0.94);
+  background: color-mix(in srgb, var(--ink) 58%, transparent);
   border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(12px);
-  transition: background-color 0.25s, border-color 0.25s;
+  backdrop-filter: blur(18px) saturate(1.4);
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
 .navbar--overlay {
@@ -27,35 +27,31 @@
 .navbar__brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  color: var(--ink);
+  gap: 12px;
+  color: var(--strong);
   white-space: nowrap;
 }
 
 .navbar__brand:hover {
-  color: var(--ink);
+  color: #fff;
 }
 
-.navbar--overlay .navbar__brand {
-  color: #fff;
+.navbar__name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 
 .navbar__logo {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: #fff;
+  width: 40px;
+  height: 40px;
+  color: var(--accent-light);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.3s;
 }
 
-.navbar__logo svg {
-  width: 20px;
-  height: 20px;
+.navbar__brand:hover .navbar__logo {
+  transform: rotate(-12deg) scale(1.06);
 }
 
 .navbar__nav {
@@ -66,35 +62,27 @@
 
 .navbar__links {
   display: flex;
-  gap: 4px;
+  gap: 2px;
 }
 
 .navbar__links a {
+  position: relative;
   display: block;
-  padding: 8px 14px;
+  padding: 8px 16px;
   border-radius: 999px;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--text);
-  transition: background-color 0.15s, color 0.15s;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 .navbar__links a:hover {
-  background: var(--bg-soft);
-  color: var(--primary);
-}
-
-.navbar__links a.is-active {
-  background: var(--primary-tint);
-  color: var(--primary);
-}
-
-.navbar--overlay .navbar__links a {
+  background: rgba(255, 255, 255, 0.12);
   color: #fff;
 }
 
-.navbar--overlay .navbar__links a:hover,
-.navbar--overlay .navbar__links a.is-active {
-  background: rgba(255, 255, 255, 0.18);
+.navbar__links a.is-active {
+  background: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
 
@@ -104,20 +92,14 @@
   width: 44px;
   height: 44px;
   border: 1px solid var(--line);
-  border-radius: 12px;
-  background: #fff;
-  color: var(--ink);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--strong);
 }
 
 .navbar__toggle svg {
   width: 22px;
   height: 22px;
-}
-
-.navbar--overlay .navbar__toggle {
-  border-color: rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.16);
-  color: #fff;
 }
 
 @media (max-width: 940px) {
@@ -136,13 +118,14 @@
     gap: 16px;
     padding: 12px var(--gutter) 24px;
     border-bottom: 1px solid var(--line);
-    background: #fff;
+    background: color-mix(in srgb, var(--ink) 94%, transparent);
+    backdrop-filter: blur(18px);
     box-shadow: var(--shadow);
   }
 
   .navbar__nav.is-open {
     display: flex;
-    animation: nav-in 0.18s ease-out;
+    animation: nav-in 0.2s ease-out;
   }
 
   .navbar__links {
@@ -151,8 +134,8 @@
   }
 
   .navbar__links a {
-    padding: 14px 12px;
-    border-radius: 12px;
+    padding: 14px 14px;
+    border-radius: 14px;
     font-size: 1.05rem;
   }
 

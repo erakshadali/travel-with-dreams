@@ -1,4 +1,4 @@
-# Travel With Dreams
+# Lazy Travellers
 
 A small-group travel agency website: browse trips, read full itineraries, discover offbeat "unexplored escapes", and send booking requests or enquiries.
 
@@ -40,8 +40,19 @@ server/         Express app: routes, data (trips, destinations, gems, testimonia
 src/            React app: pages, components, styles, hooks, utils
 ```
 
-Trips, destinations and unexplored spots live in `server/data/`. Business details (phone, email, address) live in
-`src/config/site.js`.
+Trips, destinations and unexplored spots live in `server/data/`. The brand name, tagline, contact details, hero text and brand colours live in
+`src/config/site.js` (see below).
+
+## Changing the brand, details and colours (no redeploy)
+
+Run `npm run dev` and edit `src/config/site.js`. The site name, browser-tab title, share previews, footer, contact page, hero
+text and the three brand colours (`ink`, `primary`, `accent`) all come from that one file; tints and hover shades are
+derived from the colours. It updates on save. To use the customer's own logo, put it in `public/` and set `logo`.
+The favicon and `public/og-image.jpg` are static files: replace them with the customer's artwork.
+
+The whole site sits on one dark background photo (`hero.image` in `site.js`) with frosted-glass panels on top.
+The look is set in `src/index.css` (design tokens, site backdrop, buttons, 3D tilt cards, scroll reveals) and `src/styles/`. Motion is CSS-first
+and switches off for visitors who prefer reduced motion.
 
 ## API
 
@@ -84,7 +95,7 @@ It is switched on by these Vercel environment variables (alerts are skipped if t
 | --- | --- |
 | `RESEND_API_KEY` | added automatically by the Resend integration |
 | `ALERT_EMAIL_TO` | who receives alerts — one address or a comma-separated list |
-| `ALERT_EMAIL_FROM` | optional sender, default `Travel With Dreams <onboarding@resend.dev>` |
+| `ALERT_EMAIL_FROM` | optional sender, default `<site name> <onboarding@resend.dev>` |
 
 Until you verify your own domain in Resend, it only delivers to the email address of your Resend account.
 

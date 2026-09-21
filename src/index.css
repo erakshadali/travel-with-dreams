@@ -1,44 +1,55 @@
 /* ============================================
-   TRAVEL WITH DREAMS — GLOBAL STYLES
-   Design tokens, reset, and shared UI (buttons, forms, states)
+   GLOBAL STYLES
+   Design tokens, reset, and shared UI (buttons, forms, states).
+   The three brand colours (--ink, --primary, --accent) come from src/config/site.js
+   (injected into index.html); every tint and hover shade below is derived from them.
    ============================================ */
 
 :root {
-  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
 
-  /* Colour */
-  --ink: #0b1f33;
-  --text: #2b3f52;
-  --muted: #56697c;
-  --line: #e2e9f0;
-  --bg: #ffffff;
-  --bg-soft: #f4f8fb;
-  --primary: #0a66a8;
-  --primary-dark: #084c7d;
-  --primary-tint: #e5f1fa;
-  --cta: #cf4510; /* darker orange so white text passes contrast */
-  --cta-hover: #b53b0b;
-  --cta-text: #b53b0b; /* orange for small text on light backgrounds (4.5:1+) */
-  --accent: #ff7a3d;
-  --accent-tint: #fff0e8;
-  --gold: #f5a623;
-  --success: #0f7a43;
-  --success-tint: #e6f5ec;
-  --danger: #c93030;
-  --danger-tint: #fdeded;
+  /* Brand colours — defaults, overridden by the theme in src/config/site.js */
+  --ink: #14231f;
+  --primary: #1f4a42;
+  --accent: #c9963c;
+
+  /* Colour (derived). The whole site sits on one dark mountain photo (see "Site backdrop" at the end),
+     so text is light and every panel is frosted glass. */
+  --strong: #f8f3e9; /* headings and emphasised text */
+  --text: rgba(255, 255, 255, 0.88);
+  --muted: rgba(255, 255, 255, 0.76);
+  --line: rgba(255, 255, 255, 0.16);
+  --bg: color-mix(in srgb, var(--ink) 92%, #000); /* only visible while the photo loads */
+  --bg-soft: rgba(255, 255, 255, 0.07);
+  --surface: color-mix(in srgb, var(--ink) 42%, transparent); /* dark glass panels */
+  --glass-blur: blur(16px) saturate(1.2);
+  --primary-dark: color-mix(in srgb, var(--primary) 72%, #000);
+  --primary-tint: rgba(255, 255, 255, 0.12);
+  --cta: var(--accent); /* call-to-action fill; text on it is --ink */
+  --cta-hover: color-mix(in srgb, var(--accent) 86%, #000);
+  --accent-light: color-mix(in srgb, var(--accent) 62%, #fff); /* accent used for text and icons on the dark page */
+  --cta-text: var(--accent-light);
+  --accent-tint: color-mix(in srgb, var(--accent) 18%, transparent);
+  --gold: var(--accent);
+  --success: #6fdc9d;
+  --success-tint: rgba(16, 84, 52, 0.5);
+  --danger: #ff9d9d;
+  --danger-tint: rgba(120, 30, 30, 0.42);
+  --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23e8e2d4' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
 
   /* Shape & depth */
-  --radius-sm: 10px;
-  --radius: 16px;
-  --radius-lg: 24px;
-  --shadow-sm: 0 1px 2px rgba(11, 31, 51, 0.06), 0 1px 3px rgba(11, 31, 51, 0.06);
-  --shadow: 0 6px 20px rgba(11, 31, 51, 0.08);
-  --shadow-lg: 0 18px 44px rgba(11, 31, 51, 0.16);
+  --radius-sm: 12px;
+  --radius: 18px;
+  --radius-lg: 28px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.18), 0 4px 14px rgba(0, 0, 0, 0.16);
+  --shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  --shadow-lg: 0 28px 64px rgba(0, 0, 0, 0.42);
 
   /* Layout */
   --container: 1200px;
   --gutter: clamp(16px, 4vw, 32px);
-  --header-h: 72px;
+  --header-h: 76px;
 }
 
 /* ---------- Reset ---------- */
@@ -60,10 +71,16 @@ html {
 body {
   font-family: var(--font);
   font-size: 1rem;
-  line-height: 1.65;
+  line-height: 1.7;
   color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent-light);
+  color: var(--ink);
 }
 
 img,
@@ -91,39 +108,41 @@ ol {
 }
 
 a {
-  color: var(--primary);
+  color: var(--accent-light);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--primary-dark);
+  color: #fff;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  color: var(--ink);
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  color: var(--strong);
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
 }
 
 h1 {
-  font-size: clamp(2rem, 4.6vw, 3.25rem);
+  font-size: clamp(2.25rem, 5vw, 3.6rem);
 }
 
 h2 {
-  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  font-size: clamp(1.75rem, 3.6vw, 2.75rem);
 }
 
 h3 {
-  font-size: 1.15rem;
-  letter-spacing: -0.01em;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
 }
 
 :focus-visible {
-  outline: 3px solid var(--primary);
+  outline: 3px solid var(--accent-light);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -149,7 +168,7 @@ h3 {
 }
 
 .section {
-  padding-block: clamp(56px, 8vw, 96px);
+  padding-block: clamp(64px, 9vw, 112px);
 }
 
 .section--tight {
@@ -157,7 +176,8 @@ h3 {
 }
 
 .section--soft {
-  background: var(--bg-soft);
+  background: color-mix(in srgb, var(--ink) 40%, transparent);
+  backdrop-filter: blur(6px);
 }
 
 .sr-only {
@@ -172,17 +192,29 @@ h3 {
   border: 0;
 }
 
+/* Small caps label with a hairline, used above section titles */
 .eyebrow {
-  margin-bottom: 10px;
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--cta-text);
 }
 
+.eyebrow::before {
+  content: '';
+  flex: none;
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+
 .eyebrow--light {
-  color: #ffb08a;
+  color: var(--accent-light);
 }
 
 /* ---------- Buttons ---------- */
@@ -191,15 +223,16 @@ h3 {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 22px;
-  border: 2px solid transparent;
-  border-radius: 12px;
+  padding: 13px 26px;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
   font-weight: 700;
   font-size: 0.95rem;
   line-height: 1.2;
+  letter-spacing: 0.01em;
   text-align: center;
   cursor: pointer;
-  transition: background-color 0.18s, color 0.18s, border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .btn svg {
@@ -209,7 +242,7 @@ h3 {
 }
 
 .btn:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .btn:disabled {
@@ -219,35 +252,36 @@ h3 {
 }
 
 .btn--primary {
+  border-color: rgba(255, 255, 255, 0.22);
   background: var(--primary);
   color: #fff;
 }
 
 .btn--primary:hover {
-  background: var(--primary-dark);
+  background: color-mix(in srgb, var(--primary) 70%, #fff);
   color: #fff;
 }
 
 .btn--cta {
   background: var(--cta);
-  color: #fff;
-  box-shadow: 0 6px 16px rgba(207, 69, 16, 0.28);
+  color: var(--ink);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 38%, transparent);
 }
 
 .btn--cta:hover:not(:disabled) {
   background: var(--cta-hover);
-  color: #fff;
+  color: var(--ink);
 }
 
 .btn--outline {
-  border-color: var(--primary);
-  color: var(--primary);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
   background: transparent;
 }
 
 .btn--outline:hover {
-  background: var(--primary);
-  color: #fff;
+  background: #fff;
+  color: var(--ink);
 }
 
 .btn--light {
@@ -256,18 +290,17 @@ h3 {
 }
 
 .btn--light:hover {
-  background: var(--primary-tint);
+  background: var(--accent-light);
   color: var(--ink);
 }
 
 .btn--sm {
-  padding: 9px 16px;
+  padding: 9px 18px;
   font-size: 0.875rem;
-  border-radius: 10px;
 }
 
 .btn--lg {
-  padding: 15px 28px;
+  padding: 16px 32px;
   font-size: 1rem;
 }
 
@@ -282,7 +315,7 @@ h3 {
   background: none;
   font-weight: 700;
   font-size: 0.9rem;
-  color: var(--primary);
+  color: var(--accent-light);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -293,7 +326,7 @@ h3 {
   padding: 4px 12px;
   border-radius: 999px;
   background: var(--primary-tint);
-  color: var(--primary-dark);
+  color: var(--strong);
   font-size: 0.8rem;
   font-weight: 700;
 }
@@ -304,10 +337,10 @@ h3 {
 }
 
 .chip {
-  padding: 8px 16px;
+  padding: 8px 18px;
   border: 1.5px solid var(--line);
   border-radius: 999px;
-  background: #fff;
+  background: var(--surface);
   color: var(--text);
   font-size: 0.9rem;
   font-weight: 600;
@@ -315,15 +348,19 @@ h3 {
   transition: background-color 0.15s, border-color 0.15s, color 0.15s;
 }
 
+.chip {
+  backdrop-filter: blur(10px);
+}
+
 .chip:hover {
-  border-color: var(--primary);
-  color: var(--primary);
+  border-color: var(--accent-light);
+  color: #fff;
 }
 
 .chip.is-active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--ink);
 }
 
 .rating {
@@ -331,7 +368,7 @@ h3 {
   align-items: center;
   gap: 5px;
   font-size: 0.9rem;
-  color: var(--ink);
+  color: var(--strong);
 }
 
 .rating svg {
@@ -350,8 +387,8 @@ h3 {
   place-items: center;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, var(--primary-tint), #c6dff0);
-  color: var(--primary);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--muted);
 }
 
 .img-fallback svg {
@@ -362,7 +399,7 @@ h3 {
 
 /* ---------- Loading, empty and error states ---------- */
 .skeleton {
-  background: linear-gradient(90deg, #e8eef4 25%, #f3f7fa 40%, #e8eef4 65%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.06) 25%, rgba(255, 255, 255, 0.13) 40%, rgba(255, 255, 255, 0.06) 65%);
   background-size: 400% 100%;
   border-radius: var(--radius-sm);
   animation: shimmer 1.4s ease-in-out infinite;
@@ -418,12 +455,13 @@ input,
 select,
 textarea {
   width: 100%;
-  min-height: 48px;
-  padding: 11px 14px;
-  border: 1.5px solid #cdd8e2;
-  border-radius: 12px;
-  background: #fff;
-  color: var(--ink);
+  min-height: 50px;
+  padding: 11px 16px;
+  border: 1.5px solid rgba(255, 255, 255, 0.24);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  color: var(--strong);
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 
@@ -435,22 +473,28 @@ textarea {
 select {
   appearance: none;
   padding-right: 40px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2356697c' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-image: var(--select-arrow);
   background-repeat: no-repeat;
-  background-position: right 12px center;
+  background-position: right 14px center;
   cursor: pointer;
+}
+
+/* The open dropdown list is drawn by the browser on a light surface */
+select option {
+  background: #fff;
+  color: var(--ink);
 }
 
 input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(10, 102, 168, 0.16);
+  border-color: var(--accent-light);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 28%, transparent);
 }
 
 ::placeholder {
-  color: #7d8fa0;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .field {
@@ -465,13 +509,13 @@ textarea:focus {
   gap: 6px;
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--strong);
 }
 
 .field label svg {
   width: 16px;
   height: 16px;
-  color: var(--primary);
+  color: var(--accent-light);
 }
 
 .field__required {
@@ -510,7 +554,7 @@ textarea:focus {
 .form-alert {
   margin-bottom: 16px;
   padding: 12px 16px;
-  border: 1px solid #f0b8b8;
+  border: 1px solid rgba(255, 157, 157, 0.5);
   border-radius: var(--radius-sm);
   background: var(--danger-tint);
   color: var(--danger);
@@ -524,7 +568,7 @@ textarea:focus {
   gap: 16px;
   margin-bottom: 18px;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--strong);
 }
 
 .stepper__controls {
@@ -538,16 +582,16 @@ textarea:focus {
   place-items: center;
   width: 40px;
   height: 40px;
-  border: 1.5px solid #cdd8e2;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  background: #fff;
-  color: var(--ink);
+  background: var(--surface);
+  color: var(--strong);
   transition: border-color 0.15s, color 0.15s;
 }
 
 .stepper__controls button:hover:not(:disabled) {
-  border-color: var(--primary);
-  color: var(--primary);
+  border-color: var(--accent-light);
+  color: var(--accent-light);
 }
 
 .stepper__controls button:disabled {
@@ -575,7 +619,8 @@ textarea:focus {
   padding: clamp(28px, 5vw, 48px);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: #fff;
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur);
   box-shadow: var(--shadow);
   text-align: center;
 }
@@ -595,7 +640,7 @@ textarea:focus {
 .confirmation__ref {
   font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   letter-spacing: 0.04em;
-  color: var(--primary-dark);
+  color: var(--accent-light);
 }
 
 .confirmation__details {
@@ -625,7 +670,7 @@ textarea:focus {
 
 .confirmation__details dd {
   font-weight: 700;
-  color: var(--ink);
+  color: var(--strong);
   text-align: right;
 }
 
@@ -635,4 +680,129 @@ textarea:focus {
   justify-content: center;
   gap: 12px;
   margin-top: 8px;
+}
+
+/* ---------- Scroll reveal ----------
+   Pure CSS (no JS): browsers without scroll-driven animations simply show everything.
+   `backwards` fill means the animation stops holding styles once finished, so hover effects still work. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section-heading,
+    .why-card,
+    .testimonial,
+    .destination-card:not(.skeleton),
+    .trip-card:not(.trip-card--skeleton),
+    .gem-card,
+    .cta-banner,
+    .about-story,
+    .steps li {
+      animation: reveal-up linear backwards;
+      animation-timeline: view();
+      animation-range: entry 0% entry 32%;
+    }
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- 3D tilt cards ----------
+   Elements with `data-tilt` lean towards the pointer (see src/hooks/useTilt.js).
+   --tx / --ty are the pointer position across the card in -1..1. The 3D transform is only applied while
+   the card is hovered, so at rest it is a plain flat box and its text stays perfectly sharp. */
+[data-tilt] {
+  --tx: 0;
+  --ty: 0;
+  --gx: 50%;
+  --gy: 50%;
+  --lift: 0px;
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s;
+}
+
+[data-tilt]:hover {
+  --lift: -6px;
+  transform: perspective(1100px) translateY(var(--lift)) rotateX(calc(var(--ty) * -7deg)) rotateY(calc(var(--tx) * 7deg));
+  transform-style: preserve-3d;
+}
+
+[data-tilt].is-tilting {
+  transition: transform 0.12s ease-out, box-shadow 0.3s;
+  will-change: transform;
+}
+
+/* Soft light that follows the pointer across the card */
+[data-tilt]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  background: radial-gradient(360px circle at var(--gx) var(--gy), rgba(255, 255, 255, 0.24), transparent 62%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+[data-tilt].is-tilting::before {
+  opacity: 1;
+}
+
+/* ---------- Site backdrop ----------
+   One dark mountain photo sits behind every page (its address comes from `hero.image` in src/config/site.js,
+   injected into index.html as --backdrop). The page scrolls over it, so it also acts as a parallax layer.
+   ::before is the photo, ::after is a darkening veil that keeps text readable. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -3%;
+  z-index: -2;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--ink) 55%, transparent) 0%, color-mix(in srgb, var(--ink) 20%, transparent) 42%, color-mix(in srgb, var(--ink) 66%, transparent) 100%),
+    var(--backdrop, none) center / cover no-repeat,
+    var(--bg);
+  /* On the home page the pointer nudges the photo (see the hero effect in Hero.jsx). */
+  translate: calc(var(--mx, 0) * -14px) calc(var(--my, 0) * -10px);
+  transition: translate 0.4s ease-out;
+  pointer-events: none;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--ink) 60%, transparent);
+  pointer-events: none;
+}
+
+/* Home: the veil starts clear so the hero shows the photo at full strength, then fades in as you scroll. */
+body:has(.app.is-home)::after {
+  opacity: 0.62; /* browsers without scroll-driven animations, and reduced motion */
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    body:has(.app.is-home)::after {
+      opacity: 0;
+      animation: veil-in linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 560px;
+    }
+  }
+}
+
+@keyframes veil-in {
+  to {
+    opacity: 1;
+  }
 }

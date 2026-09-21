@@ -8,7 +8,7 @@ export default function Testimonials({ items }) {
         <SectionHeading center eyebrow="Traveller stories" title="What our travellers say" />
         <ul className="testimonials">
           {items.slice(0, 3).map((item) => (
-            <li key={item.id} className="testimonial">
+            <li key={item.id} className="testimonial" data-tilt>
               <Quote className="testimonial__quote" aria-hidden="true" />
               <p className="testimonial__stars" role="img" aria-label={`${item.rating} out of 5 stars`}>
                 {Array.from({ length: item.rating }, (_, i) => (

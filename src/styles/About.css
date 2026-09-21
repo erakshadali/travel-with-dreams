@@ -61,11 +61,12 @@
   height: 56px;
   margin: 0 auto 18px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--cta), var(--accent));
-  color: #fff;
-  font-size: 1.4rem;
-  font-weight: 800;
-  box-shadow: 0 8px 20px rgba(207, 69, 16, 0.3);
+  background: linear-gradient(135deg, var(--accent-light), var(--accent));
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--accent) 34%, transparent);
 }
 
 .steps h3 {
