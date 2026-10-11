@@ -1,5 +1,5 @@
 // ===========================================================================
-//  LAZY TRAVELLERS — brand, contact details and colours in one place.
+//  TRAVEL WITH DREAMS — brand, contact details and colours in one place.
 //
 //  Run `npm run dev` and edit anything below: the page updates on save.
 //  Nothing here needs a push, a build or a redeploy.
@@ -13,10 +13,10 @@
 // ===========================================================================
 export const SITE = {
   // ---------- Brand ----------
-  name: 'Lazy Travellers',
+  name: 'Travel With Dreams',
   tagline: 'Trips that become stories', // browser tab title + share previews
   description:
-    'Lazy Travellers — small-group trips across India and abroad. Ladakh, Spiti, Kashmir, Kerala, Goa, Bali and more, with expert trip captains and transparent pricing.',
+    'Travel With Dreams — small-group trips across India and abroad. Ladakh, Spiti, Kashmir, Kerala, Goa, Bali and more, with expert trip captains and transparent pricing.',
   // Optional own logo: drop a file in /public (e.g. '/logo.png') and set it here.
   // Leave empty to use the built-in sunset mark.
   logo: '',
@@ -24,7 +24,7 @@ export const SITE = {
   // ---------- Customer contact details (footer + contact page) ----------
   phone: '+91 98765 43210',
   phoneHref: 'tel:+919876543210',
-  email: 'hello@lazytravellers.example',
+  email: 'hello@travelwithdreams.example',
   address: '12 Sample Street, Connaught Place, New Delhi 110001',
   hours: 'Mon – Sat, 10:00 am – 7:00 pm IST',
 

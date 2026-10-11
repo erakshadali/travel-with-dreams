@@ -1,4 +1,4 @@
-# Lazy Travellers
+# Travel With Dreams
 
 A small-group travel agency website: browse trips, read full itineraries, discover offbeat "unexplored escapes", and send booking requests or enquiries.
 
