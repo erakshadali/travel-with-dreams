@@ -7,18 +7,18 @@ import { neon } from '@neondatabase/serverless';
 //   1. Postgres (Neon) when DATABASE_URL is set — used in production on Vercel
 //   2. Function logs on Vercel without a database, so submissions are not silently lost
 //   3. server/storage/*.json on a developer machine
-const STORAGE_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'storage');
+export const STORAGE_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'storage');
 
 let sql = null;
 let tableReady = null;
 
 // Created lazily so the app still starts (and builds) when DATABASE_URL is missing.
-function getDb() {
+export function getDb() {
   if (!sql) sql = neon(process.env.DATABASE_URL);
   return sql;
 }
 
-function ensureTable() {
+export function ensureTable() {
   if (!tableReady) {
     tableReady = getDb()`
       CREATE TABLE IF NOT EXISTS submissions (

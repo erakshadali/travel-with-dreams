@@ -1,3 +1,4 @@
+import { Suspense, lazy } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -14,9 +15,20 @@ import NotFound from './pages/NotFound';
 import './styles/App.css';
 import './styles/Sections.css';
 
+// The owner's panel is its own app: no site header/footer, and its code is only downloaded on /admin.
+const AdminApp = lazy(() => import('./admin/AdminApp'));
+
 function App() {
   const { pathname } = useLocation();
   useTilt();
+
+  if (pathname === '/admin' || pathname.startsWith('/admin/')) {
+    return (
+      <Suspense fallback={null}>
+        <AdminApp />
+      </Suspense>
+    );
+  }
 
   return (
     <div className={`app${pathname === '/' ? ' is-home' : ''}`}>

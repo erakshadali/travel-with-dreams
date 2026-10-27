@@ -85,6 +85,16 @@ npm run submissions -- bookings   # or: enquiries
 
 You can also browse the table in the Neon console via the Vercel dashboard → Storage.
 
+### Admin panel
+
+Open `/admin` to see bookings and enquiries, change their status, add private notes, export CSV and read the
+activity log. Sign-in is a single owner password:
+
+- **Production:** set `ADMIN_PASSWORD` in Vercel (`vercel env add ADMIN_PASSWORD production`), then redeploy. Until it is
+  set, login is refused. `ADMIN_SESSION_SECRET` is optional (signs the 8-hour session cookie).
+- **Local:** with no setup the password is `admin123`, and the panel reads the local JSON files (no database needed).
+- The first admin request on a database adds `status`, `admin_note`, `updated_at` columns and an `activity_log` table.
+
 ### Email alerts
 
 `server/lib/notify.js` emails your team on every new booking request and enquiry (via [Resend](https://resend.com)).

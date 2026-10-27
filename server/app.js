@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
+import adminRouter from './routes/admin.js';
 import catalogRouter from './routes/catalog.js';
 import formsRouter from './routes/forms.js';
 import { ValidationError } from './lib/validate.js';
@@ -17,6 +18,7 @@ if (process.env.VERCEL) app.set('trust proxy', 1);
 app.use(express.json({ limit: '20kb' }));
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.use('/api/admin', adminRouter);
 app.use('/api', catalogRouter);
 app.use('/api', formsRouter);
 app.use('/api', (req, res) => res.status(404).json({ error: 'Not found' }));

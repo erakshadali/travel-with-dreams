@@ -30,6 +30,7 @@ const robots = `User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /book/
+Disallow: /admin
 
 Sitemap: ${base}/sitemap.xml
 `;

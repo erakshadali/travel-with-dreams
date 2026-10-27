@@ -35,3 +35,20 @@ export const api = {
   sendEnquiry: (body) => request('/enquiries', { method: 'POST', body: JSON.stringify(body) }),
   createBooking: (body) => request('/bookings', { method: 'POST', body: JSON.stringify(body) }),
 };
+
+// Owner-only calls for the admin panel; the session cookie is set by /admin/login.
+const query = (params = {}) => {
+  const search = new URLSearchParams(Object.entries(params).filter(([, value]) => value));
+  return search.size ? `?${search}` : '';
+};
+
+export const adminApi = {
+  me: () => request('/admin/me'),
+  login: (password) => request('/admin/login', { method: 'POST', body: JSON.stringify({ password }) }),
+  logout: () => request('/admin/logout', { method: 'POST' }),
+  stats: () => request('/admin/stats'),
+  submissions: (params) => request(`/admin/submissions${query(params)}`),
+  update: (reference, body) => request(`/admin/submissions/${reference}`, { method: 'PATCH', body: JSON.stringify(body) }),
+  activity: () => request('/admin/activity'),
+  exportUrl: (params) => `/api/admin/export.csv${query(params)}`,
+};
