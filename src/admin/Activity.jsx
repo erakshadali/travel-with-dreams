@@ -1,15 +1,21 @@
-import { History, StickyNote, Tag } from 'lucide-react';
+import { FilePen, History, StickyNote, Tag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { adminApi } from '../api/client';
 import { EmptyState, ErrorState } from '../components/States';
 import { formatDateTime, statusLabel } from './format';
 import { useAdminData } from './useAdminData';
 
+const CONTENT_NAMES = { trips: 'trip', gems: 'unexplored spot', testimonials: 'review' };
+
 function describe({ action, detail }) {
   if (action === 'status_changed') {
     return { icon: Tag, text: `${detail.name}'s ${detail.kind} moved from ${statusLabel(detail.from)} to ${statusLabel(detail.to)}` };
   }
   if (action === 'note_updated') return { icon: StickyNote, text: `Note updated on ${detail.name}'s ${detail.kind}` };
+  if (action.startsWith('content_')) {
+    const verb = { content_created: 'Added', content_updated: 'Edited', content_deleted: 'Deleted' }[action] ?? 'Changed';
+    return { icon: FilePen, text: `${verb} ${CONTENT_NAMES[detail.collection] ?? 'content'} "${detail.title}"` };
+  }
   return { icon: History, text: action };
 }
 
@@ -44,7 +50,7 @@ export default function Activity() {
                 <div>
                   <p>{text}</p>
                   <p className="admin-muted">
-                    <Link to={`/admin/${entry.detail.kind}s?ref=${entry.reference}`}>{entry.reference}</Link> ·{' '}
+                    {entry.detail.kind ? <Link to={`/admin/${entry.detail.kind}s?ref=${entry.reference}`}>{entry.reference}</Link> : <Link to={`/admin/content?c=${entry.detail.collection}`}>Website content</Link>} ·{' '}
                     <time dateTime={entry.createdAt}>{formatDateTime(entry.createdAt)}</time>
                   </p>
                 </div>

@@ -1,4 +1,5 @@
-import { trips, BREAKDOWN_SHARES } from '../data/trips.js';
+import { BREAKDOWN_SHARES } from '../data/trips.js';
+import { listPublished } from './contentStore.js';
 
 export const GST_RATE = 0.05;
 export const MAX_TRAVELLERS = 10;
@@ -51,16 +52,17 @@ export function quote(trip, travellers) {
   return { pricePerPerson: trip.price, travellers, subtotal, gst, total: subtotal + gst };
 }
 
-export function listTrips({ featured, destination, limit } = {}) {
-  let result = trips;
+// Only published trips are visible to the public site; the admin panel reads everything through contentStore.
+export async function listTrips({ featured, destination, limit } = {}) {
+  let result = await listPublished('trips');
   if (featured) result = result.filter((t) => t.featured);
   if (destination) result = result.filter((t) => t.destination === destination);
   if (limit) result = result.slice(0, limit);
   return result.map((trip) => Object.fromEntries(SUMMARY_FIELDS.map((field) => [field, trip[field]])));
 }
 
-export function findTrip(slug) {
-  return trips.find((trip) => trip.slug === slug);
+export async function findTrip(slug) {
+  return (await listPublished('trips')).find((trip) => trip.slug === slug);
 }
 
 export function tripDetail(trip) {

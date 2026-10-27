@@ -27,3 +27,6 @@ export function whatsappLink(phone, text) {
   const full = digits.length === 10 ? `91${digits}` : digits;
   return `https://wa.me/${full}${text ? `?text=${encodeURIComponent(text)}` : ''}`;
 }
+
+// Website content: trips and unexplored spots are keyed by slug, reviews by id.
+export const keyOf = (collection, item) => String(collection === 'testimonials' ? item.id : item.slug);

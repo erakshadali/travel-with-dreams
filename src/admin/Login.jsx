@@ -5,6 +5,7 @@ import { adminApi } from '../api/client';
 import Field from '../components/Field';
 import Logo from '../components/Logo';
 import { SITE } from '../config/site';
+import { OWNER_KEY } from '../utils/track';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -26,6 +27,12 @@ export default function Login() {
     setError('');
     try {
       await adminApi.login(password);
+      // Keeps the owner's own browsing out of the Visitors numbers.
+      try {
+        localStorage.setItem(OWNER_KEY, '1');
+      } catch {
+        // Storage blocked: the visits just get counted.
+      }
       navigate('/admin', { replace: true });
     } catch (failure) {
       setError(failure.message);

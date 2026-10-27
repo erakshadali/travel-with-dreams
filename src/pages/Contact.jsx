@@ -6,6 +6,7 @@ import Field from '../components/Field';
 import { api } from '../api/client';
 import { SITE } from '../config/site';
 import { useApi } from '../hooks/useApi';
+import { trackEvent } from '../utils/track';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { focusFirstInvalid } from '../utils/focus';
 import { validateContact } from '../utils/validate';
@@ -80,6 +81,7 @@ export default function Contact() {
     try {
       const result = await api.sendEnquiry({ ...form, travellers: Number.parseInt(form.travellers, 10) });
       setReference(result.reference);
+      trackEvent('enquiry_done');
     } catch (err) {
       setErrors(err.fields ?? {});
       setFormError(err.message);

@@ -99,7 +99,7 @@ async function listFromFiles() {
 // ---------- Public API ----------
 export const listSubmissions = () => (storageMode() === 'database' ? listFromDb() : listFromFiles());
 
-async function logActivity(action, reference, detail) {
+export async function logActivity(action, reference, detail) {
   if (storageMode() === 'database') {
     await getDb()`INSERT INTO activity_log (action, reference, detail) VALUES (${action}, ${reference}, ${JSON.stringify(detail)}::jsonb)`;
     return;

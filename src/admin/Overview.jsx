@@ -59,7 +59,7 @@ function TrendChart({ series }) {
 }
 
 export default function Overview() {
-  const { data, error, loading, reload } = useAdminData(() => adminApi.stats(), 'stats');
+  const { data, error, loading, reload } = useAdminData(() => adminApi.stats(), 'stats', { refreshMs: 30000 });
 
   if (loading && !data) return <p className="admin-muted" role="status">Loading…</p>;
   if (error) return <ErrorState message={error} onRetry={reload} />;

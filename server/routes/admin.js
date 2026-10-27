@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import { adminConfigured, endSession, hasSession, passwordMatches, requireAdmin, startSession } from '../lib/adminAuth.js';
-import { STATUSES, listActivity, listSubmissions, storageMode, updateSubmission } from '../lib/adminStore.js';
-import { computeStats } from '../lib/adminStats.js';
-import { clean } from '../lib/validate.js';
+import { STATUSES, listActivity, listSubmissions, logActivity, storageMode, updateSubmission } from '../lib/adminStore.js';
+import { computeCustomers, computeStats } from '../lib/adminStats.js';
+import { analyticsReport } from '../lib/analytics.js';
+import { COLLECTIONS, deleteContent, keyOf, listContent, saveContent } from '../lib/contentStore.js';
+import { SCHEMAS, schemaForClient, validateRecord } from '../lib/contentSchema.js';
+import { ValidationError, clean } from '../lib/validate.js';
 
 const router = Router();
 
@@ -95,6 +98,75 @@ router.patch('/submissions/:reference', async (req, res) => {
 
   const updated = await updateSubmission(req.params.reference, { status, note: note === undefined ? undefined : clean(note, 1000) });
   return res.json(updated);
+});
+
+router.get('/customers', async (req, res) => {
+  const text = clean(req.query.q, 80).toLowerCase();
+  const customers = computeCustomers(await listSubmissions()).filter(
+    (customer) =>
+      (req.query.filter !== 'repeat' || customer.history.length > 1) &&
+      (!text || [customer.name, customer.phone, customer.email, ...customer.trips].some((value) => String(value ?? '').toLowerCase().includes(text))),
+  );
+  res.json({ items: customers, total: customers.length });
+});
+
+const RANGES = new Set([7, 30, 90]);
+
+router.get('/analytics', async (req, res) => {
+  const days = RANGES.has(Number(req.query.days)) ? Number(req.query.days) : 30;
+  const titles = Object.fromEntries((await listContent('trips', { fresh: true })).map((trip) => [trip.slug, trip.title]));
+  res.json({ ...(await analyticsReport(days, titles)), storage: storageMode() });
+});
+
+// ---------- Website content: trips, unexplored spots, reviews ----------
+const tripOptions = async () => ({
+  trips: (await listContent('trips', { fresh: true })).map((trip) => ({ value: trip.slug, label: trip.title })),
+});
+
+const collectionOf = (req, res, next) => {
+  if (!COLLECTIONS.includes(req.params.collection)) return res.status(404).json({ error: 'Not found.' });
+  return next();
+};
+
+router.get('/content-schema', async (req, res) => {
+  res.json(schemaForClient(await tripOptions()));
+});
+
+router.get('/content/:collection', collectionOf, async (req, res) => {
+  res.json({ items: await listContent(req.params.collection, { fresh: true }) });
+});
+
+async function writeRecord(req, res, keyValue) {
+  const { collection } = req.params;
+  const existing = await listContent(collection, { fresh: true });
+  const { value, errors } = validateRecord(collection, req.body, { keyValue, optionValues: await tripOptions() });
+  if (keyValue === undefined && collection !== 'testimonials' && existing.some((item) => keyOf(collection, item) === String(value[SCHEMAS[collection].keyField]))) {
+    errors[SCHEMAS[collection].keyField] = 'Something with this web address already exists.';
+  }
+  if (Object.keys(errors).length > 0) throw new ValidationError(errors);
+
+  await saveContent(collection, value);
+  const title = value[SCHEMAS[collection].titleField];
+  await logActivity(keyValue === undefined ? 'content_created' : 'content_updated', `${collection}:${keyOf(collection, value)}`, { collection, title });
+  return res.status(keyValue === undefined ? 201 : 200).json(value);
+}
+
+router.post('/content/:collection', collectionOf, (req, res) => writeRecord(req, res, undefined));
+
+router.put('/content/:collection/:key', collectionOf, async (req, res) => {
+  const { collection, key } = req.params;
+  const current = (await listContent(collection, { fresh: true })).find((item) => keyOf(collection, item) === key);
+  if (!current) return res.status(404).json({ error: 'Not found.' });
+  return writeRecord(req, res, key);
+});
+
+router.delete('/content/:collection/:key', collectionOf, async (req, res) => {
+  const { collection, key } = req.params;
+  const current = (await listContent(collection, { fresh: true })).find((item) => keyOf(collection, item) === key);
+  if (!current) return res.status(404).json({ error: 'Not found.' });
+  await deleteContent(collection, key);
+  await logActivity('content_deleted', `${collection}:${key}`, { collection, title: current[SCHEMAS[collection].titleField] });
+  return res.json({ ok: true });
 });
 
 router.get('/activity', async (req, res) => {

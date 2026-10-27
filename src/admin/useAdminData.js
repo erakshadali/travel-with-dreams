@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 // Loads data for an admin screen and reloads whenever `key` changes (a string describing the filters).
 // Like useApi, `loading` is derived rather than set inside the effect; the previous result stays on screen
 // while a new one loads, so typing in a search box does not flash an empty page.
-// A 401 means the session ended, so go back to the login page.
-export function useAdminData(load, key) {
+// Pass `refreshMs` to poll for changes. A 401 means the session ended, so go back to the login page.
+export function useAdminData(load, key, { refreshMs = 0 } = {}) {
   const navigate = useNavigate();
   const [attempt, setAttempt] = useState(0);
   const [result, setResult] = useState({ key: null, attempt: -1, data: null, error: null });
@@ -25,6 +25,13 @@ export function useAdminData(load, key) {
     // `load` is a new closure every render; `key` already describes what it fetches.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key, attempt, navigate]);
+
+  // Quietly re-check for new bookings while the tab is open; the old data stays on screen meanwhile.
+  useEffect(() => {
+    if (!refreshMs) return undefined;
+    const timer = setInterval(() => document.visibilityState === 'visible' && setAttempt((n) => n + 1), refreshMs);
+    return () => clearInterval(timer);
+  }, [refreshMs]);
 
   const settled = result.key === key && result.attempt === attempt;
   return {

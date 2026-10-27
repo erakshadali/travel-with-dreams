@@ -50,5 +50,12 @@ export const adminApi = {
   submissions: (params) => request(`/admin/submissions${query(params)}`),
   update: (reference, body) => request(`/admin/submissions/${reference}`, { method: 'PATCH', body: JSON.stringify(body) }),
   activity: () => request('/admin/activity'),
+  customers: (params) => request(`/admin/customers${query(params)}`),
+  analytics: (days) => request(`/admin/analytics?days=${days}`),
+  contentSchema: () => request('/admin/content-schema'),
+  contentList: (collection) => request(`/admin/content/${collection}`),
+  contentCreate: (collection, body) => request(`/admin/content/${collection}`, { method: 'POST', body: JSON.stringify(body) }),
+  contentUpdate: (collection, key, body) => request(`/admin/content/${collection}/${encodeURIComponent(key)}`, { method: 'PUT', body: JSON.stringify(body) }),
+  contentDelete: (collection, key) => request(`/admin/content/${collection}/${encodeURIComponent(key)}`, { method: 'DELETE' }),
   exportUrl: (params) => `/api/admin/export.csv${query(params)}`,
 };

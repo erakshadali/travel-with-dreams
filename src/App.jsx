@@ -1,9 +1,10 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import { useTilt } from './hooks/useTilt';
+import { trackEvent } from './utils/track';
 import Home from './pages/Home';
 import Trips from './pages/Trips';
 import TripDetails from './pages/TripDetails';
@@ -22,7 +23,13 @@ function App() {
   const { pathname } = useLocation();
   useTilt();
 
-  if (pathname === '/admin' || pathname.startsWith('/admin/')) {
+  const isAdmin = pathname === '/admin' || pathname.startsWith('/admin/');
+
+  useEffect(() => {
+    if (!isAdmin) trackEvent('view', pathname);
+  }, [pathname, isAdmin]);
+
+  if (isAdmin) {
     return (
       <Suspense fallback={null}>
         <AdminApp />

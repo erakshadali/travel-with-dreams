@@ -37,7 +37,7 @@ router.post('/enquiries', limiter, async (req, res) => {
   };
 
   const errors = contactErrors(enquiry);
-  if (enquiry.tripSlug && !findTrip(enquiry.tripSlug)) errors.tripSlug = 'Please choose a valid trip.';
+  if (enquiry.tripSlug && !(await findTrip(enquiry.tripSlug))) errors.tripSlug = 'Please choose a valid trip.';
   if (enquiry.message.length < 10) errors.message = 'Tell us a little more (at least 10 characters).';
   requireValid(errors);
 
@@ -46,13 +46,13 @@ router.post('/enquiries', limiter, async (req, res) => {
     ...enquiry,
     createdAt: new Date().toISOString(),
   });
-  await notifyEnquiry({ ...saved, tripTitle: findTrip(saved.tripSlug)?.title });
+  await notifyEnquiry({ ...saved, tripTitle: (await findTrip(saved.tripSlug))?.title });
   res.status(201).json({ reference: saved.reference });
 });
 
 router.post('/bookings', limiter, async (req, res) => {
   const body = req.body ?? {};
-  const trip = findTrip(clean(body.tripSlug, 80));
+  const trip = await findTrip(clean(body.tripSlug, 80));
   const travellers = Number.parseInt(body.travellers, 10);
   const departureDate = clean(body.departureDate, 10);
 

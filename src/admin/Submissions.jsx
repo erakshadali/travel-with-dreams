@@ -45,7 +45,7 @@ export default function Submissions({ kind }) {
   }, [search]);
 
   const filters = { kind, status, q, from, to };
-  const { data, error, loading, reload, setData } = useAdminData(() => adminApi.submissions(filters), JSON.stringify(filters));
+  const { data, error, loading, reload, setData } = useAdminData(() => adminApi.submissions(filters), JSON.stringify(filters), { refreshMs: 30000 });
   const items = data?.items ?? [];
   const current = items.find((item) => item.reference === selected);
   const filtering = Boolean(status || q || from || to);

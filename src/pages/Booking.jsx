@@ -8,6 +8,7 @@ import { ErrorState } from '../components/States';
 import NotFound from './NotFound';
 import { api } from '../api/client';
 import { useApi } from '../hooks/useApi';
+import { trackEvent } from '../utils/track';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { formatDate, formatPrice } from '../utils/format';
 import { focusFirstInvalid } from '../utils/focus';
@@ -86,6 +87,7 @@ function BookingForm({ trip, initialDate, initialTravellers }) {
         notes: form.notes,
       });
       setConfirmation(result);
+      trackEvent('booking_done');
       window.scrollTo({ top: 0 });
     } catch (err) {
       setErrors(err.fields ?? {});

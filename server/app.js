@@ -5,6 +5,7 @@ import express from 'express';
 import adminRouter from './routes/admin.js';
 import catalogRouter from './routes/catalog.js';
 import formsRouter from './routes/forms.js';
+import trackRouter from './routes/track.js';
 import { ValidationError } from './lib/validate.js';
 
 // The Express app, without `listen`, so it can run both as a normal server (server/index.js)
@@ -15,12 +16,15 @@ const distDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'd
 app.disable('x-powered-by');
 // Behind Vercel's proxy the real client IP is in X-Forwarded-For; the rate limiter needs it.
 if (process.env.VERCEL) app.set('trust proxy', 1);
+// A full trip (itinerary, inclusions...) is bigger than anything the public forms send.
+app.use('/api/admin', express.json({ limit: '200kb' }));
 app.use(express.json({ limit: '20kb' }));
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 app.use('/api/admin', adminRouter);
 app.use('/api', catalogRouter);
 app.use('/api', formsRouter);
+app.use('/api', trackRouter);
 app.use('/api', (req, res) => res.status(404).json({ error: 'Not found' }));
 
 // In production (`npm run build && npm start`) Express also serves the built React app.
